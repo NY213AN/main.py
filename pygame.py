@@ -1,26 +1,31 @@
 import random
 
-def play():
-    user = input("whats your choice? 'r' for rock , 'p' for paper ,'s' for scissors\n")
-    user = user.lower()
+def get_user_choice():
+    choices = ['rock', 'paper', 'scissors']
+    user_choice = input("Enter a choice (rock, paper, scissors): ").lower()
+    while user_choice not in choices:
+        print("Invalid choice. Try again.")
+        user_choice = input("Enter a choice (rock, paper, scissors): ").lower()
+    return user_choice
 
-    computer = random.choice(['r', 'p', 's'])
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
 
-    if user == computer:
-        return "you and the computer have both chosen {}. it's a tie".format(computer)
+def determine_winner(user_choice, computer_choice):
+    if user_choice == computer_choice:
+        return "It's a tie!"
+    elif (user_choice == 'rock' and computer_choice == 'scissors') or \
+         (user_choice == 'scissors' and computer_choice == 'paper') or \
+         (user_choice == 'paper' and computer_choice == 'rock'):
+        return "You win!"
+    else:
+        return "You lose!"
 
-        # r > s, s > p , p > r
-        if is_win (user,computer):
-            return "you have chosen {} and the computer has chosen {}. you won!".format(user,computer)
+def play_game():
+    user_choice = get_user_choice()
+    computer_choice = get_computer_choice()
+    print(f"\nYou chose {user_choice}, computer chose {computer_choice}.")
+    print(determine_winner(user_choice, computer_choice))
 
-            return "you have chosen {} and the computer has chosen {}.you lost:(".format(user, computer)
-
-def is_win(player, oponent):
-    # return true is the player beats opponent
-    # wining conditions: r > s, s > p, p > r
-    if (player == 'r' and opponent == 's') or (player == 's' and opponent == 'p') or ( player == 'p' and opponent =='r'):
-        return  True
-    return False
-
-if __name__=='__main__':
-    print(play())
+# Play the game
+play_game()
